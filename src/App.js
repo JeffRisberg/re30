@@ -3,17 +3,28 @@ import './App.css';
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+class Link extends React.Component {
+    render() {
+        return React.createElement(
+            "p",
+            null,
+            React.createElement(
+                "a",
+                { href: "//react.dev" },
+                "Read more about React"
+            )
+        );
+    }
+}
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-
-        const title = React.createElement("h1", null, "Hello world!");
-        const link = React.createElement("a", { href: "//reactjs.org" }, "Read more");
-        const group = React.createElement("div", null, title, link);
-        const domElement = document.getElementById("root"); ReactDOM.createRoot(domElement).render(group);
-      </header>
-    </div>
+    const link1 = React.createElement(Link);
+    const link2 = React.createElement(Link);
+    const link3 = React.createElement(Link);
+    const group = React.createElement(React.Fragment, null, link1, link2, link3);
+    const domElement = document.getElementById("root");
+    ReactDOM.createRoot(domElement).render(group);
   );
 }
 
