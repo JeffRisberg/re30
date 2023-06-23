@@ -1,31 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React, {Component, Fragment} from "react";
 
-class Link extends React.Component {
+class Link extends Component {
     render() {
         return React.createElement(
             "p",
-            null,
-            React.createElement(
+            null, React.createElement(
                 "a",
-                { href: "//react.dev" },
-                "Read more about React"
-            )
-        );
+                {href: this.props.url},
+                `Read more about ${this.props.framework}`
+            ));
     }
 }
 
-function App() {
-  return (
-    const link1 = React.createElement(Link);
-    const link2 = React.createElement(Link);
-    const link3 = React.createElement(Link);
-    const group = React.createElement(React.Fragment, null, link1, link2, link3);
-    const domElement = document.getElementById("root");
-    ReactDOM.createRoot(domElement).render(group);
-  );
+class App extends Component {
+    render() {
+        const link1 = React.createElement(Link, {
+            framework: "React",
+            url: "//reactjs.org",
+        });
+        const link2 = React.createElement(Link, {
+            framework: "Vue",
+            url: "//vuejs.org",
+        });
+        const link3 = React.createElement(Link, {
+            framework: "Angular",
+            url: "//angular.io",
+        });
+        return React.createElement(Fragment, null, link1, link2, link3);
+    }
 }
 
 export default App;
