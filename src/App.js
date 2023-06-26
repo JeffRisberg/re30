@@ -1,48 +1,38 @@
-import {Component, Fragment} from "react";
+import {Component} from "react";
 
-class UserButtons extends Component {
-
-    render() {
-        const hasCreditCard = this.props.user.creditcard !== null;
-        const hasAddress = this.props.user.address !== null;
-        const disabled = !this.props.canCheckout;
-        return hasCreditCard ? (
-            <Fragment>
-                <button disabled={disabled}>Checkout</button>
-                {hasAddress && <button disabled={disabled}>One-click buy</button>}
-            </Fragment>) : (
-            <button>Add credit card</button>);
-    }
-}
-
-class GuestButtons extends Component {
-    render() {
-        return (
-            <Fragment>
-                <button>Login</button>
-                <button disabled={!this.props.canCheckout}>Checkout as guest</button>
-            </Fragment>
-        );
-    }
-}
-
-class ShoppingCart extends Component {
-    render() {
-        const hasItems = this.props.items.length > 0;
-        const isLoggedIn = this.props.user !== null;
-        const isAvailable = this.props.items.every((item) => !item.outOfStock);
-        const canCheckout = hasItems && isAvailable;
-        return isLoggedIn ? (
-            <UserButtons user={this.props.user} canCheckout={canCheckout}/>) : (
-            <GuestButtons canCheckout={canCheckout}/>);
-    }
-}
+import Button from "./Button";
+import Timer from "./Timer";
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+        this.state =  {timeLeft: null, timer: null}
+        this.startTimer = this.startTimer.bind(this)
+    }
+    startTimer(timeLeft) {
+        clearInterval(this.state.timer)
+        let timer = setInterval(() => {
+            console.log('2: Inside of setInterval')
+            var timeLeft = this.state.timeLeft - 1
+            if (timeLeft === 0) clearInterval(timer)
+            this.setState({timeLeft: timeLeft})
+        }, 1000)
+        console.log('1: After setInterval')
+        return this.setState({timeLeft: timeLeft, timer: timer})
+    }
     render() {
-        const items = [1, 2, 3];
-        const user = {creditcard: null, address: true};
-        return <ShoppingCart items={items} user={user}/>;
+        return (
+            <div className="row-fluid">
+                <h2>Timer</h2>
+                <div className="btn-group" role="group" >
+                    <Button time="5" startTimer={this.startTimer}/>
+                    <Button time="10" startTimer={this.startTimer}/>
+                    <Button time="15" startTimer={this.startTimer}/>
+                </div>
+                <Timer timeLeft={this.state.timeLeft}/>
+                <audio id="end-of-time" src="sounds/flute_c_long_01.wav" preload="auto"></audio>
+            </div>
+        )
     }
 }
 
