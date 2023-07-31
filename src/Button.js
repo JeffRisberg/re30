@@ -1,17 +1,9 @@
-import React, {Component} from "react";
-
-class Button extends Component {
-    startTimer(event) {
-        return this.props.startTimer(this.props.time)
-    }
-    render() {
-        return <button
-            type="button"
-            className='btn-default btn'
-            onClick={()=>{this.props.startTimer(this.props.time)}}>
-            {this.props.time} seconds
-        </button>
-    }
+function Button({ icon, label, ...rest }) {
+  return (
+    <button title={label} className="toggle" {...rest}>
+      <img src={`icons/${icon}.svg`} alt={label} />
+    </button>
+  );
 }
 
 export default Button;
